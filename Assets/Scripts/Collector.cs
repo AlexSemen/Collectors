@@ -1,53 +1,104 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Collector : MonoBehaviour
 {
-    [SerializeField] private Resource _targetResource;
-    [SerializeField] private Base Base;
     [SerializeField] private float _speed;
+    [SerializeField] private float _interactionDistanceResource;
+    [SerializeField] private float _interactionDistanceBase;
     [SerializeField] private Transform _resourceTransferLocation;
 
-    private bool _busy;
-    private Rigidbody _rigidbody;
+    private Base _base;
+    private Resource _targetResource;
     private Vector3 _target;
+    private Rigidbody _rigidbody;
+    private Condition _status;
 
-    public bool Busy { get { return _busy; } private set { _busy = value; } }
+    public Condition Status { get { return _status; } private set { _status = value; } }
+
+    public enum Condition
+    {
+        GoesForResource,
+        CarriesResourceToBase,
+        Idle
+    }
 
     private void Awake()
     {
+        Status = Condition.Idle;
         _rigidbody = GetComponent<Rigidbody>();
-    }
-
-
-    public void SetTargetResource(Resource targetResource)
-    {
-        _targetResource = targetResource;
-        Busy = true;
     }
 
     private void FixedUpdate()
     {
-        if (_targetResource != null)
+        switch (Status)
         {
-            _target = new Vector3(_targetResource.transform.position.x, transform.position.y, _targetResource.transform.position.z);
-            transform.LookAt(_target);
-            _rigidbody.velocity = transform.forward * _speed * Time.deltaTime;
+            case Condition.GoesForResource:
+                if (_targetResource != null)
+                {
+                    Move();
+
+                    if (Vector3.Distance(transform.position, _target) <= _interactionDistanceResource)
+                    {
+                        TakeResource();
+                    }
+                }
+                break; 
+            
+            case Condition.CarriesResourceToBase:
+                Move();
+
+                if (Vector3.Distance(transform.position, _target) < _interactionDistanceBase)
+                {
+                    GiveResource();
+                }
+                break;
+            
+            case Condition.Idle:
+                break;
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetBase(Base newBase)
     {
-        
+        _base = newBase;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Move()
     {
-        
+        transform.LookAt(_target);
+        _rigidbody.velocity = transform.forward * _speed * Time.deltaTime;
+    }
+
+    public void SetTargetResource(Resource targetResource)
+    {
+        targetResource.TrueBusy();
+        SetTarget(targetResource.transform);
+        Status = Condition.GoesForResource;
+        _targetResource = targetResource;
+    }
+
+    private void TakeResource()
+    {
+        _targetResource.transform.position = _resourceTransferLocation.position;
+        _targetResource.transform.SetParent(_resourceTransferLocation);
+        SetTarget(_base.transform);
+        Status = Condition.CarriesResourceToBase;
+    }
+
+    private void GiveResource()
+    {
+        Destroy(_targetResource.gameObject);
+        Status = Condition.Idle;
+        _base.TakeResource(this);
+    }
+
+    private void SetTarget(Transform transform)
+    {
+        _target = new Vector3(transform.transform.position.x, transform.position.y, transform.transform.position.z);
     }
 }

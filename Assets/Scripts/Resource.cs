@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Resource : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool Busy {  get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    public void TrueBusy()
     {
-        
+        Busy = true;
     }
 }
