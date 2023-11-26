@@ -12,6 +12,8 @@ public class Collector : MonoBehaviour
     [SerializeField] private float _interactionDistanceBase;
     [SerializeField] private Transform _resourceTransferLocation;
 
+    public static List<Collector> Collectors { get; private set; }
+
     private Base _base;
     private Resource _targetResource;
     private Vector3 _target;
@@ -19,6 +21,11 @@ public class Collector : MonoBehaviour
     private Condition _status;
 
     public Condition Status { get { return _status; } private set { _status = value; } }
+
+    static Collector()
+    {
+        Collectors = new List<Collector>();
+    }
 
     public enum Condition
     {
@@ -31,47 +38,38 @@ public class Collector : MonoBehaviour
     {
         Status = Condition.Idle;
         _rigidbody = GetComponent<Rigidbody>();
+        Collectors.Add(this);
     }
 
     private void FixedUpdate()
     {
-        switch (Status)
+        if (Status != Condition.Idle)
         {
-            case Condition.GoesForResource:
-                if (_targetResource != null)
-                {
-                    Move();
+            Move();
 
+            switch (Status)
+            {
+                case Condition.GoesForResource:
                     if (Vector3.Distance(transform.position, _target) <= _interactionDistanceResource)
                     {
                         TakeResource();
                     }
-                }
-                break; 
-            
-            case Condition.CarriesResourceToBase:
-                Move();
+                    break;
 
-                if (Vector3.Distance(transform.position, _target) < _interactionDistanceBase)
-                {
-                    GiveResource();
-                }
-                break;
-            
-            case Condition.Idle:
-                break;
+                case Condition.CarriesResourceToBase:
+                    if (Vector3.Distance(transform.position, _target) < _interactionDistanceBase)
+                    {
+                        GiveResource();
+                    }
+                    break;
+            }
         }
+        
     }
 
     public void SetBase(Base newBase)
     {
         _base = newBase;
-    }
-
-    private void Move()
-    {
-        transform.LookAt(_target);
-        _rigidbody.velocity = transform.forward * _speed * Time.deltaTime;
     }
 
     public void SetTargetResource(Resource targetResource)
@@ -82,8 +80,15 @@ public class Collector : MonoBehaviour
         _targetResource = targetResource;
     }
 
+    private void Move()
+    {
+        transform.LookAt(_target);
+        _rigidbody.velocity = transform.forward * _speed * Time.deltaTime;
+    }
+
     private void TakeResource()
     {
+        _targetResource.RaiseFromGround();
         _targetResource.transform.position = _resourceTransferLocation.position;
         _targetResource.transform.SetParent(_resourceTransferLocation);
         SetTarget(_base.transform);

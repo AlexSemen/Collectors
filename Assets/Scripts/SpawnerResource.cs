@@ -19,18 +19,15 @@ public class SpawnerResource : MonoBehaviour
     [SerializeField] private float _turn;
     [SerializeField] private float _distanceFromResource;
     [SerializeField] private float _distanceFromBase;
-    [SerializeField] private Base _Base;
-    
+
     private int _spawnAttempts;
     private int _failedAttempts;
     private Vector3 _curretTransformSpam;
-    public static List<Resource> _resources;
 
     private void Awake()
     {
         _spawnAttempts = 10;
         _failedAttempts = 0;
-        _resources = new List<Resource>();
     }
 
     private void Start()
@@ -53,7 +50,7 @@ public class SpawnerResource : MonoBehaviour
 
     private void SpamResourcesNumber(int quantity)
     {
-        _resources = GetComponentsInChildren<Resource>().ToList();
+        _failedAttempts = 0;
 
         for (int i = 0; i < quantity; i++)
         {
@@ -77,14 +74,17 @@ public class SpawnerResource : MonoBehaviour
     {
         _curretTransformSpam = new Vector3(Random.Range(-_distance, _distance), _spawnHeight, Random.Range(-_distance, _distance));
 
-        if (Vector3.Distance(_Base.transform.position, _curretTransformSpam) < _distanceFromBase)
+        for (int i = 0; i < Base.Bases.Count; i++)
         {
-            return false;
+            if (Vector3.Distance(Base.Bases[i].transform.position, _curretTransformSpam) < _distanceFromResource)
+            {
+                return false;
+            }
         }
 
-        for (int i = 0; i < _resources.Count; i++)
+        for (int i = 0; i < Resource.ResourcesOnEarth.Count; i++)
         {
-            if (Vector3.Distance(_resources[i].transform.position, _curretTransformSpam) < _distanceFromResource)
+            if (Vector3.Distance(Resource.ResourcesOnEarth[i].transform.position, _curretTransformSpam) < _distanceFromResource)
             {
                 return false;
             }
@@ -93,8 +93,6 @@ public class SpawnerResource : MonoBehaviour
         Resource resource = Instantiate(_resource, _curretTransformSpam, Quaternion.identity);
         resource.transform.Rotate(0.0f, Random.Range(-_turn, _turn), 0.0f);
         resource.transform.SetParent(transform);
-
-        _resources.Add(resource);
 
         return true;
     }
