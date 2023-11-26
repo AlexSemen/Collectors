@@ -13,6 +13,7 @@ public class Base : MonoBehaviour
 
     public static List<Base> Bases { get; private set; }
 
+    private int _initialNumberCollectors;
     private int _checkDelay;
     private Resource _resourceTarget;
     private List<Collector> _collectorsIdle;
@@ -26,6 +27,7 @@ public class Base : MonoBehaviour
     private void Awake()
     {
         _collectorsIdle = new List<Collector>();
+        _initialNumberCollectors = 3;
         _checkDelay = 1;
         _spawnerCollectors.transform.localPosition = new Vector3(0, -transform.position.y, 0);
         Bases.Add(this);
@@ -33,9 +35,10 @@ public class Base : MonoBehaviour
 
     private void Start()
     {
-        SpamCollector();
-        SpamCollector();
-        SpamCollector();
+        for(int i = 0; i < _initialNumberCollectors; i++)
+        {
+            SpamCollector();
+        }
 
         StartCoroutine(CheckStatus());
     }
