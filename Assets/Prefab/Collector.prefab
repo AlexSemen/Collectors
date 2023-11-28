@@ -382,5 +382,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 50
   _interactionDistanceResource: 1
+  _interactionDistanceFlag: 2
   _interactionDistanceBase: 3
   _resourceTransferLocation: {fileID: 5050842782729797176}

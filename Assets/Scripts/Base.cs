@@ -7,27 +7,45 @@ using UnityEngine;
 
 public class Base : MonoBehaviour
 {
+    [SerializeField] private int _initialNumberCollectors;
     [SerializeField] private SpawnerCollectors _spawnerCollectors;
     [SerializeField] private ScanResources _scanResources;
     [SerializeField] private int _numberResources;
 
     public static List<Base> Bases { get; private set; }
-
-    private int _initialNumberCollectors;
+    
     private int _checkDelay;
+    private int _priceCollector;
+    private int _priceBase;
     private Resource _resourceTarget;
     private List<Collector> _collectorsIdle;
-    private Collector _newCollectors;
+    private Collector _newCollector;
+
+    public Flag Flag { get; private set; }
 
     static Base()
     {
         Bases = new List<Base>();
     }
 
+    public void TakeResource(Collector collector)
+    {
+        _numberResources++;
+        _collectorsIdle.Add(collector);
+    }
+
+    public void AddCollector(Collector collector)
+    {
+        _collectorsIdle.Add(collector);
+        collector.SetBase(this);
+    }
+
     private void Awake()
     {
         _collectorsIdle = new List<Collector>();
-        _initialNumberCollectors = 3;
+        _priceCollector = 3;
+        _priceBase = 5;
+        _numberResources = _initialNumberCollectors * _priceCollector;
         _checkDelay = 1;
         _spawnerCollectors.transform.localPosition = new Vector3(0, -transform.position.y, 0);
         Bases.Add(this);
@@ -42,13 +60,7 @@ public class Base : MonoBehaviour
 
         StartCoroutine(CheckStatus());
     }
-
-    public void TakeResource(Collector collector)
-    {
-        _numberResources++;
-        _collectorsIdle.Add(collector);
-    }
-
+   
     private IEnumerator CheckStatus()
     {
         var waitForDelay = new WaitForSeconds(_checkDelay);
@@ -56,9 +68,31 @@ public class Base : MonoBehaviour
 
         while (isWork)
         {
-            if (_collectorsIdle.Count > 0)
+            if (Flag == null)
             {
-                CollectorSetTargetResource();
+                if (_numberResources >= _priceCollector)
+                {
+                    SpamCollector();
+                }
+
+                if (_collectorsIdle.Count > 0)
+                {
+                    CollectorSetTargetResource();
+                }
+            }
+            else
+            {
+                if (_numberResources >= _priceBase)
+                {
+                    CollectorSetTargetFlag();
+                }
+                else
+                {
+                    if (_collectorsIdle.Count > 0)
+                    {
+                        CollectorSetTargetResource();
+                    }
+                }
             }
 
             yield return waitForDelay;
@@ -76,14 +110,32 @@ public class Base : MonoBehaviour
         }
     }
 
+    private void CollectorSetTargetFlag()
+    {
+        _numberResources -= _priceBase;
+
+        if (Flag != null && _collectorsIdle.Count > 0)
+        {
+            _collectorsIdle[0].SetTargetFlag(Flag);
+            _collectorsIdle.RemoveAt(0);
+        }
+
+        Flag = null;
+    }
+
     private void SpamCollector()
     {
-        _newCollectors = _spawnerCollectors.SpamCollector();
+        _newCollector = _spawnerCollectors.SpamCollector();
 
-        if(_newCollectors != null)
+        if(_newCollector != null)
         {
-            _collectorsIdle.Add( _newCollectors );
-            _newCollectors.SetBase(this);
+            _numberResources -= _priceCollector;
+            AddCollector(_newCollector);
         }
+    }
+
+    public void SetFlag(Flag flag)
+    {
+        Flag = flag;
     }
 }

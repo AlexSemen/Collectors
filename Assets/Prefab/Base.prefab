@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6195410070474877072}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 964400743009057841}
   - component: {fileID: 7141425290854537246}
   - component: {fileID: 1113594148418449105}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 2146770078481187190}
   - component: {fileID: 3825520682471363175}
   - component: {fileID: 359273481112027147}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +211,8 @@ GameObject:
   - component: {fileID: 3585786143900893356}
   - component: {fileID: 980881027585201320}
   - component: {fileID: 5517418311915095133}
-  m_Layer: 0
+  - component: {fileID: 2254401412414530050}
+  m_Layer: 7
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,6 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c95af2adeeb8a41b896d6b9cdb9c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initialNumberCollectors: 0
   _spawnerCollectors: {fileID: 1208685287330437767}
   _scanResources: {fileID: 5517418311915095133}
   _numberResources: 0
@@ -262,6 +264,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 051359ea4f1f99742bd455bb775ec944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &2254401412414530050
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5373888612685556173}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.7
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6480315441773599443
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4629468462572040924}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spawn Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +327,7 @@ GameObject:
   - component: {fileID: 7268125423257381910}
   - component: {fileID: 9201056127680525383}
   - component: {fileID: 580230825535825047}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,7 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2180938520546404948}
   - component: {fileID: 1208685287330437767}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnCollectors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
