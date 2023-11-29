@@ -12,8 +12,8 @@ public class Base : MonoBehaviour
     [SerializeField] private ScanResources _scanResources;
     [SerializeField] private int _numberResources;
 
-    public static List<Base> Bases { get; private set; }
-    
+    public static List<Base> Bases { get; private set; } = new List<Base>();
+
     private int _checkDelay;
     private int _priceCollector;
     private int _priceBase;
@@ -22,11 +22,6 @@ public class Base : MonoBehaviour
     private Collector _newCollector;
 
     public Flag Flag { get; private set; }
-
-    static Base()
-    {
-        Bases = new List<Base>();
-    }
 
     public void TakeResource(Collector collector)
     {

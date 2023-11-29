@@ -8,8 +8,8 @@ public class Flag : MonoBehaviour
 
     public void BuildBase(Collector collector)
     {
-        Base @base = Instantiate(_base, transform.position, Quaternion.identity);
-        @base.AddCollector(collector);
+        Base newBase = Instantiate(_base, transform.position, Quaternion.identity);
+        newBase.AddCollector(collector);
         Destroy(gameObject);
     }
 }

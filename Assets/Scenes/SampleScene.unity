@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fef7dafa52ed3429745221bc9623c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _base: {fileID: 980881027585201320, guid: 0b9caf640605eb0499f702023c78a148, type: 3}
+  _base: {fileID: 0}
   _flag: {fileID: 7132945980243538738, guid: 320f34408f5e01a458cd1974de1a88ab, type: 3}
   _interactionWithMouse:
     serializedVersion: 2
@@ -393,6 +393,7 @@ GameObject:
   - component: {fileID: 1693915515}
   - component: {fileID: 1693915514}
   - component: {fileID: 1693915513}
+  - component: {fileID: 1693915517}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
@@ -486,6 +487,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1693915517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693915512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051359ea4f1f99742bd455bb775ec944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2118545139
 GameObject:
   m_ObjectHideFlags: 0

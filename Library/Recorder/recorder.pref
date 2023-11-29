@@ -37,7 +37,7 @@ MonoBehaviour:
   m_Name: Movie
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 4
+  take: 6
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
@@ -45,7 +45,7 @@ MonoBehaviour:
       m_Leaf: Recordings
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
-    m_FileName: "\u0421\u0431\u043E\u0440\u0449\u0438\u043A\u0438_<Take>"
+    m_FileName: "\u0421\u0431\u043E\u0440\u0449\u0438\u043A\u04382_<Take>"
   m_Version: 1
   encoderSettings:
     rid: 7508512699084963840
