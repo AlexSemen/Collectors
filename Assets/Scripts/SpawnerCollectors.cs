@@ -14,6 +14,7 @@ public class SpawnerCollectors : MonoBehaviour
     private int _spawnAttempts;
     private int _failedAttempts;
     private bool _isSpawnPointFree;
+    private Collider[] _hitColliders;
 
     private void Awake()
     {
@@ -32,9 +33,11 @@ public class SpawnerCollectors : MonoBehaviour
 
             transform.Rotate(0.0f, Random.Range(-_spawnTurn, _spawnTurn), 0.0f);
 
-            for (int i = 0; i < Collector.Collectors.Count; i++)
+            _hitColliders = Physics.OverlapSphere(_spawnPoint.position, _spawnDistanceFromUnit);
+
+            foreach (var collider in _hitColliders)
             {
-                if (Vector3.Distance(Collector.Collectors[i].transform.position, _spawnPoint.position) < _spawnDistanceFromUnit)
+                if (collider.GetComponent<Collector>())
                 {
                     _isSpawnPointFree = false;
                 }

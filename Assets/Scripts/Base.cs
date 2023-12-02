@@ -56,7 +56,6 @@ public class Base : MonoBehaviour
    
     private IEnumerator CheckStatus()
     {
-        Debug.Log(name);
         var waitForDelay = new WaitForSeconds(_checkDelay);
         bool isWork = true;
 

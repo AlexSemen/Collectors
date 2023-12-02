@@ -13,8 +13,6 @@ public class Collector : MonoBehaviour
     [SerializeField] private float _interactionDistanceBase;
     [SerializeField] private Transform _resourceTransferLocation;
 
-    public static List<Collector> Collectors { get; private set; }
-
     private Base _base;
     private Resource _targetResource;
     private Flag _targetFlag;
@@ -24,11 +22,6 @@ public class Collector : MonoBehaviour
     private Condition _status;
 
     public Condition Status { get { return _status; } private set { _status = value; } }
-
-    static Collector()
-    {
-        Collectors = new List<Collector>();
-    }
 
     public enum Condition
     {
@@ -43,7 +36,6 @@ public class Collector : MonoBehaviour
         _targetY = 1;
         Status = Condition.Idle;
         _rigidbody = GetComponent<Rigidbody>();
-        Collectors.Add(this);
     }
 
     private void FixedUpdate()

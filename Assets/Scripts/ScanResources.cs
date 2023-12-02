@@ -20,7 +20,8 @@ public class ScanResources : MonoBehaviour
         {
             if (collider.TryGetComponent<Resource>(out _newResourceTarget))
             {
-                if (_newResourceTarget.Busy == false && (_resourceTarget == null || Vector3.Distance(transform.position, _resourceTarget.transform.position) > Vector3.Distance(transform.position, _newResourceTarget.transform.position)))
+                if (_newResourceTarget.Busy == false &&
+                    (_resourceTarget == null || Vector3.Distance(transform.position, _resourceTarget.transform.position) > Vector3.Distance(transform.position, _newResourceTarget.transform.position)))
                 {
                     _resourceTarget = _newResourceTarget;
                 }
