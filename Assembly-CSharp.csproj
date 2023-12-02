@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Flag.cs" />
-    <Compile Include="Assets\Scripts\RaiseFromGround.cs" />
     <Compile Include="Assets\Scripts\Colonization.cs" />
     <Compile Include="Assets\Scripts\ScanResources.cs" />
     <Compile Include="Assets\Scripts\Resource.cs" />

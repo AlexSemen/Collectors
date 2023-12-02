@@ -362,7 +362,6 @@
 "Assets/Scripts/Collector.cs"
 "Assets/Scripts/Colonization.cs"
 "Assets/Scripts/Flag.cs"
-"Assets/Scripts/RaiseFromGround.cs"
 "Assets/Scripts/Resource.cs"
 "Assets/Scripts/ScanResources.cs"
 "Assets/Scripts/SpawnerCollectors.cs"

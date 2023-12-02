@@ -73,6 +73,7 @@ public class Collector : MonoBehaviour
                     {
                        _targetFlag.BuildBase(this);
                         _targetFlag = null;
+                        Status = Condition.Idle;
                     }
                     break;
             }

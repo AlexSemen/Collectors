@@ -365,7 +365,7 @@ MonoBehaviour:
   _spawnHeight: 0.65
   _turn: 45
   _distanceFromResource: 0.5
-  _distanceFromBase: 10
+  _distanceFromBase: 5
 --- !u!4 &1469524969
 Transform:
   m_ObjectHideFlags: 0
@@ -589,7 +589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5517418311915095133, guid: 0b9caf640605eb0499f702023c78a148, type: 3}
       propertyPath: _distanceScan
-      value: 999
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -41,6 +41,7 @@ public class Base : MonoBehaviour
         _numberResources = _initialNumberCollectors * _priceCollector;
         _checkDelay = 1;
         _spawnerCollectors.transform.localPosition = new Vector3(0, -transform.position.y, 0);
+        Flag = null;
     }
 
     private void Start()
@@ -55,6 +56,7 @@ public class Base : MonoBehaviour
    
     private IEnumerator CheckStatus()
     {
+        Debug.Log(name);
         var waitForDelay = new WaitForSeconds(_checkDelay);
         bool isWork = true;
 
