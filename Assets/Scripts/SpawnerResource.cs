@@ -22,9 +22,20 @@ public class SpawnerResource : MonoBehaviour
     private int _spawnAttempts;
     private int _failedAttempts;
     private Vector3 _curretTransformSpam;
+    private Collider[] _hitColliders;
+    private float _distanceFromMax;
 
     private void Awake()
     {
+        if(_distanceFromBase > _distanceFromResource)
+        {
+            _distanceFromMax = _distanceFromBase;
+        }
+        else
+        {
+            _distanceFromMax = _distanceFromResource;
+        }
+
         _spawnAttempts = 10;
         _failedAttempts = 0;
     }
@@ -73,17 +84,16 @@ public class SpawnerResource : MonoBehaviour
     {
         _curretTransformSpam = new Vector3(Random.Range(-_distance, _distance), _spawnHeight, Random.Range(-_distance, _distance));
 
-        for (int i = 0; i < Base.Bases.Count; i++)
+        _hitColliders = Physics.OverlapSphere(_curretTransformSpam, _distanceFromMax);
+
+        foreach(var collider in _hitColliders)
         {
-            if (Vector3.Distance(Base.Bases[i].transform.position, _curretTransformSpam) < _distanceFromResource)
+            if (collider.GetComponent<Base>() && Vector3.Distance(collider.transform.position, _curretTransformSpam) < _distanceFromBase)
             {
                 return false;
             }
-        }
 
-        for (int i = 0; i < Resource.ResourcesOnEarth.Count; i++)
-        {
-            if (Vector3.Distance(Resource.ResourcesOnEarth[i].transform.position, _curretTransformSpam) < _distanceFromResource)
+            if (collider.GetComponent<Resource>() && Vector3.Distance(collider.transform.position, _curretTransformSpam) < _distanceFromResource)
             {
                 return false;
             }

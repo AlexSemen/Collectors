@@ -5,16 +5,25 @@ using UnityEngine;
 
 public class ScanResources : MonoBehaviour
 {
+    [SerializeField] private float _distanceScan;
     private Resource _resourceTarget;
+    private Resource _newResourceTarget;
+    private Collider[] _hitColliders;
+
     public Resource FindNearestFreeResource(Transform transform)
     {
         _resourceTarget = null;
 
-        foreach (var resource in Resource.ResourcesOnEarth)
+        _hitColliders = Physics.OverlapSphere(transform.position, _distanceScan);
+
+        foreach (Collider collider in _hitColliders)
         {
-            if (resource.Busy == false && (_resourceTarget == null || Vector3.Distance(transform.position, _resourceTarget.transform.position) > Vector3.Distance(transform.position, resource.transform.position)))
+            if (collider.TryGetComponent<Resource>(out _newResourceTarget))
             {
-                _resourceTarget = resource;
+                if (_newResourceTarget.Busy == false && (_resourceTarget == null || Vector3.Distance(transform.position, _resourceTarget.transform.position) > Vector3.Distance(transform.position, _newResourceTarget.transform.position)))
+                {
+                    _resourceTarget = _newResourceTarget;
+                }
             }
         }
 

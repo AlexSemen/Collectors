@@ -12,8 +12,6 @@ public class Base : MonoBehaviour
     [SerializeField] private ScanResources _scanResources;
     [SerializeField] private int _numberResources;
 
-    public static List<Base> Bases { get; private set; } = new List<Base>();
-
     private int _checkDelay;
     private int _priceCollector;
     private int _priceBase;
@@ -43,7 +41,6 @@ public class Base : MonoBehaviour
         _numberResources = _initialNumberCollectors * _priceCollector;
         _checkDelay = 1;
         _spawnerCollectors.transform.localPosition = new Vector3(0, -transform.position.y, 0);
-        Bases.Add(this);
     }
 
     private void Start()

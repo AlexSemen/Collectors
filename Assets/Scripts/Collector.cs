@@ -108,7 +108,6 @@ public class Collector : MonoBehaviour
 
     private void TakeResource()
     {
-        _targetResource.RaiseFromGround();
         _targetResource.transform.position = _resourceTransferLocation.position;
         _targetResource.transform.SetParent(_resourceTransferLocation);
         SetTarget(_base.transform);
