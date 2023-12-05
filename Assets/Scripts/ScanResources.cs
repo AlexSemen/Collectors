@@ -6,6 +6,7 @@ using UnityEngine;
 public class ScanResources : MonoBehaviour
 {
     [SerializeField] private float _distanceScan;
+
     private Resource _resourceTarget;
     private Resource _newResourceTarget;
     private Collider[] _hitColliders;

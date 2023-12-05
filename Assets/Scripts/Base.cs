@@ -21,18 +21,6 @@ public class Base : MonoBehaviour
 
     public Flag Flag { get; private set; }
 
-    public void TakeResource(Collector collector)
-    {
-        _numberResources++;
-        _collectorsIdle.Add(collector);
-    }
-
-    public void AddCollector(Collector collector)
-    {
-        _collectorsIdle.Add(collector);
-        collector.SetBase(this);
-    }
-
     private void Awake()
     {
         _collectorsIdle = new List<Collector>();
@@ -53,7 +41,19 @@ public class Base : MonoBehaviour
 
         StartCoroutine(CheckStatus());
     }
-   
+
+    public void TakeResource(Collector collector)
+    {
+        _numberResources++;
+        _collectorsIdle.Add(collector);
+    }
+
+    public void AddCollector(Collector collector)
+    {
+        _collectorsIdle.Add(collector);
+        collector.SetBase(this);
+    }
+
     private IEnumerator CheckStatus()
     {
         var waitForDelay = new WaitForSeconds(_checkDelay);
